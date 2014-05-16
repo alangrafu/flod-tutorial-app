@@ -5,7 +5,7 @@
 	<meta name="author" content="">
 	<link rel="shortcut icon" href="/ico/favicon.ico">
 
-	<title>Welcome to FLOD</title>
+	<title>FLOD Tutorial</title>
 
 	<!-- Bootstrap core CSS -->
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -15,7 +15,9 @@
 			padding-bottom: 40px;
 			background-color: #eee;
 		}
-
+		p{
+			text-align: justify;
+		}
 		.form-signin {
 			max-width: 330px;
 			padding: 15px;

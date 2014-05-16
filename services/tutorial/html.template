@@ -1,0 +1,113 @@
+{%extends "components/includes/base.html"%}
+{%block content%}
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>How FLOD works</h1>
+        <p>A brief explanation of how FLOD works and how developers can make use of FLOD.</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+          <h2>Modules</h2>
+          <p>FLOD is built based on a set of <strong>modules</strong>. Each module does one specific thing, and it contains two main methods: <strong>test</strong> and <strong>execute</strong>. First, each module will test if the current request can be served by it or not. If the module decides this particular request is not its responsibility, it will let the other modules to test it. If no module decides that a request is its responsibility, FLOD returns a 404 response. On ther other hand, if a module decide it is its responsibility to serve a request, FLOD will make that module responsible to serve that request. <strong>No other module will be involved in serving that particular request</strong>.</p>
+        </div>
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+          <h2>Components</h2>
+          <p>Components are folders with queries, templates, etc. available for modules to use. When a module is executed it will use one component. Components are avilable in the <code>components</code> folder.
+          </p>
+        </div>
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+          <h2>What modules are available?</h2>
+          <p>At the moment of this writing, there are 4 modules available:</p>
+          <h3>Static</h3>
+          <p>Serves static content, which is everything available in the folder <code>components/static</code>. Thus, if an agent requests the resource <code>http://example.org/css/style.css</code>, the static module will check if the file <code>components/css/style.css</code> exists. If so, it will serve it, otherwise it will let FLOD to execute other modules.
+          </p>
+          <h3>Users</h3>
+          <p>It controls if an agent has the privileges to access a resource. If so, it will let the request to the other modules. If the agent doesn't have enough privileges, it will serve the request by returning a 40X error.</p>
+          <p>The <strong>Users</strong> module also provides the functionalities for login, logout, creation and modification of users. The data is stored in a special file <code>users.ttl</code> which is located in the root of FLOD folder. The passwords are salted and hashed using SHA224. The default <code>users.ttl</code> looks like this:</p>
+          <pre>
+          <code>
+@prefix flod: &lt;http://flod.info/&gt; .
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix xml: &lt;http://www.w3.org/XML/1998/namespace&gt; .
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+
+&lt;file:///996e4e35d18511e3851f542696d57b35&gt; a flod:User ;
+    flod:group &lt;file:///admin&gt; ;
+    flod:password "6e8a135aba85437dba98170cffafbd28c974dc2160cadd0b7f34341d" ;
+    flod:salt "84c948fb95904850a0b9d9100f72b787" ;
+    flod:username "admin" .
+
+&lt;file:///anonymous&gt; a flod:Group ;
+    flod:allowedPattern "/home", "/login" ;
+    flod:name "Anonymous" .
+
+&lt;file:///admin&gt; a flod:Group ;
+    flod:allowedPattern "" ;
+    flod:name "Admin Group" .
+</code>
+</pre>
+<p>The file <code>users.ttl</code> contains also <strong>groups</strong>, which are allowed to access certain URIs, based on regular expressions. Thus, the <strong>Admin Group</strong> can access any URI, while the <strong>Anonymous</strong> group can only access <code>/home</code> and <code>/login</code>. Eventually, developers could allow new groups to access only URIs of the form <code>/resource/*</code>.</p>
+
+<h4>(*) Notes on the use of Users</h4>
+<ul>
+  <li>
+    You can edit <code>users.ttl</code> by hand, but it is highly discouraged to change the hashes that way. To do so, please use the GUI.
+  </li>
+  <li>
+    There are plans to allow other ways of authentication, but user/pass is the only one implemented yet.
+  </li>
+  <li>
+    The current version forces you to restart FLOD after you have added a group. Future version will not have such restriction.
+  </li>
+  <li>
+    Current version does not allow you to associate a user with a group. You have to do it by hand, editing <code>users.ttl</code>. Future versions will provide this functionality.
+  </li>
+  <li>
+    As it was described before, the <strong>order</strong> of the modules is important. The default setting consist in:
+    <ul>
+      <li>Static</li>
+      <li>Users</li>
+      <li>Services</li>
+      <li>JasonBasedWriter</li>
+      <li>Types</li>
+    </ul>
+    In this way, an un privileged agent will only have access to the static files at most.
+  </li>
+</ul>
+</div>
+<div class="row">
+  <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+    <h3>Services</h3>
+
+    <p><strong>Services</strong> provides custom URL that return aggregated content located in a triplestore. The services components are located in <code>components/services</code>. For example, if an agent requests the resource <code>http://example.org/foo</code>, the <strong>Services</strong> module will check if a <code>components/services/foo</code> folder exists. If it doesn't, it will let other modules to take care of it.</p>
+    <h4>Structure of a Service component</h4>
+    <p>At the time of this writing, a service component <strong>must</strong> have a <code>html.template</code> file containing the HTML required to show the services (more information about this in the <a href="#templates">templates</a> section). It <strong>may</strong> contain a <code>queries</code> folder with zero, one or more SPARQL queries.
+
+    <pre>
+    <code>
+    components/services/foo/
+                           |
+                           |-html.template
+                           |
+                           |-queries/
+                                    |
+                                    |-q1.query
+                                    |
+                                    |-q2.query
+                                    |
+                                    |-qN.query
+</code>
+</pre>
+
+<p>When a service component is used, the queries will be executed against the default SPARQL endpoint, in any order. The results will be available in the <code>queries.q1</code>, <code>queries.q2</code>, ..., <code>queries.qN</code> objects to be displayed in the template.</p>
+
+  </div>
+</div>
+</div>
+{%endblock%}
