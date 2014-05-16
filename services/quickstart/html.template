@@ -1,0 +1,49 @@
+{%extends "components/includes/base.html"%}
+{%block content%}
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Quickstart</h1>
+        <p>Start running FLOD in 1 minute.</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+          <h2>How to run FLOD</h2>
+          <p>If you are reading this, it is highly likely you know how to configure FLOD. Anyways, the step-by-step process is as follows</p>
+          <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">Software required</h3>
+              </div>
+              <div class="panel-body">
+                Just be aware that before following these steps you need git, Python 2.7+, pip and virtualenv installed.
+              </div>
+          </div>
+          <ul>
+            <li>Open a terminal and run <code>bash < <(curl -skL http://lodspeakr.org/flod)</code></li>
+            <li>You will be asked if you want to use an existing git repository for your components (for example, this tutorial is available at ). If you do not hae an existing app repository, FLOD will create a new one with some default components.</li>
+            <li id="new">If you create a brand new component repository, you will be asked the following questions
+              <ul>
+                <li>Your server's name (e.g., <code>http://myserver.com</code>)</li>
+                <li>Your data's namespace (e.g., <code>http://dbpedia.org/</code>)</li>
+                <li>The URL of the SPARQL endpoint (e.g., <code>http://localhost:3030/foo/query</code> for fuseki)</li>
+              </ul>
+            </li>
+            <li>The installer will be in charge of creating the virtual environment and loading all the packages. After that you just need to run
+            <pre>
+            <code>
+cd flod
+./start.sh
+            </code>
+            </pre>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+</div>
+{%endblock%}

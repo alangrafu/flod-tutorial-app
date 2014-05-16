@@ -12,7 +12,7 @@
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-          <h2>Modules</h2>
+          <h2 id="modules">Modules</h2>
           <p>FLOD is built based on a set of <strong>modules</strong>. Each module does one specific thing, and it contains two main methods: <strong>test</strong> and <strong>execute</strong>. First, each module will test if the current request can be served by it or not. If the module decides this particular request is not its responsibility, it will let the other modules to test it. If no module decides that a request is its responsibility, FLOD returns a 404 response. On ther other hand, if a module decide it is its responsibility to serve a request, FLOD will make that module responsible to serve that request. <strong>No other module will be involved in serving that particular request</strong>.</p>
         </div>
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">

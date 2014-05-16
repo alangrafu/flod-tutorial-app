@@ -1,0 +1,65 @@
+{%extends "components/includes/base.html"%}
+{%block content%}
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Settings</h1>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+          <h2>Introduction</h2>
+          <p>Along with the components, the settings file is the one that defines your application. It is located at <code>components/settings.json</code>. Typically it is a JSON file similar to this:</p>
+          <pre>
+            <code>
+{
+  "modules": [ "Static", "Users", "Services", "Types"],
+  "ns": {
+    "local": "http://localhost:5002/",
+    "origin": "http://dbpedia.org/"
+  },
+  "mirrored": true,
+  "endpoints": {
+    "local": "http://dbpedia.org/sparql",
+    "dbpedia": "http://dbpedia.org/sparql"
+  },
+  "sparqlUpdateEndpoint":{
+    "local": "http://localhost:3030/asd/update"
+  },
+  "host": "0.0.0.0",
+  "port": 5002,
+  "flod": { 
+    "title": "FLOD"
+  },
+  "secret": "77777777777777777777777",
+  "root": "tutorial"
+}
+</code>
+</pre>
+<h2>Modules</h2>
+<p>The <code>modules</code> array defines which modules will be used and in what order they will be executed. See <a href="tutorial#modules">the tutorial</a> for more details.</p>
+<h2>Namespaces (ns)</h2>
+<p>The <code>ns</code> object contains the local namespace of the FLOD installation and the origin namespace of the data defined when creating a <a href="quickstart#new">new component repository</a>. This data is needed so FLOD can mirror URIs (for example, serving http://dbpedia.org/* as http://localhost/*). There are other default namespaces already defined in FLOD for common voabularies such as FOAF, Dublin Core, etc. You can add more namespaces here.</p>
+<h2>Mirroring</h2>
+<p>Mirroring is the ability of replicate URIs from a namespace and serve them using a different namespace. For example, if we want to create an application using data from DBpedia, </p>
+<h2>Endpoints</h2>
+<p>Defines the SPARQL endpoints available. Currently, the modules in FLOD support only the <code>local</code> endpoint.</p>
+<h2>sparqlUpdateEndpoint</h2>
+<p>Defines the Sparql Update endpoints. Currently, the modules in FLOD support only the <code>local</code> endpoint.</p>
+<h2>host</h2>
+<p>Defines the IP to which FLOD will listen.</p>
+<h2>port</h2>
+<p>Defines the port to which FLOD will listen.</p>
+<h2>flod</h2>
+<p>It provides a space for including custom variables to an application. For example, the <code>title</code> can be used in the <code>&lt;title&gt;&lt;/title&gt;</code> element. You can provide any name (e.g., <code>foo</code>) to your variables and they will be available in {%raw%}{{flod.foo}}{%endraw%}.</p>
+<h2>Secret</h2>
+<p>The key to generate the sessions. It is randomly generated when installing flod. It is <strong>HIGHLY RECOMMENDED</strong> to create a new one if you install an existing app.</p>
+<h2>Root</h2>
+<p>By default, FLOD will redirect the empty path request (<code>http://example.org/</code>) to an existing component (e.g, <code>http://example.org/home</code>)</p>
+        </div>
+      </div>
+    </div>
+{%endblock%}

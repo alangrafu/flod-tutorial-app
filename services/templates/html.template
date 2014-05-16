@@ -1,0 +1,42 @@
+{%extends "components/includes/base.html"%}
+{%block content%}
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Templates</h1>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+          <h2>Jinja</h2>
+          <p>FLOD uses Jinja2 templates for rendering content. Jinja is a very powerful template engine that allow developers to create content easily. It supports extension, blocks, filters and many other goodies. More information in the Jinja documentation website</p>
+          <h3>Variables</h3>
+          <p>FLOD provides a series of variables that can be used in any template or query.</p>
+          <ul>
+            <li><code>uri</code> The URI requested</li>
+            <li><code>flod.*</code> are variables defined by the developer in <code>settings.json</code>. See more details in <a href='/settings'>settings section</a>.</li>
+            <li><code>session.*</code> provides information about the user and its session, when the <strong>Users</strong> module is active. Currently, the data available is:
+              <ul>
+                <li><code>session.username</code> the username of the user</li>
+                <li><code>session.uri</code> the URI of the user</li>
+                <li><code>session.groups</code> an array of groups where the user belonged</li>
+                <li><code>session.salt</code> the salt for the password of the user</li>
+              </ul>
+            </li>
+            <li><code>queries.QUERYNAME</code> an array of results for all the SPARQL queries executed. Each array contains two values:
+              <ul>
+                <li><code>row.VARNAME.value</code> the value obtained from the SPARQL results. <strong>NOTE:</strong> if the mirroring option is <code>true</code>, the URIs from the origin namespace will be translated to the local namespace. If the value is not a URI, there is no change.</li>
+                <li><code>row.VARNAME.curie</code> the CURIe version of the URI. Same mirroring applies here. If the value is not a URI, this variable contains the same value as <code>row.VARNAME.value</code>.</li>
+              </ul>
+            </li>
+            <li><code>args[]</code> (<strong>Only in Services module</strong>) returns the segments in a URI after the service name (e.g., <code>http://example.org/foo/bar/123</code>, then <code>arg[0]</code> is <code>bar</code> and <code>arg[1]</code> is <code>123</code>).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+{%endblock%}

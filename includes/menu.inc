@@ -12,13 +12,10 @@
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/">Home</a></li>
-            {%if "username" not in session %}
-            <li><a href="/login">Login</a></li>
-            {%else%}
-            
-            <li><a href="/admin/edituser">Edit</a></li>
-            <li><a href="/logout">Logout</a></li>
-            {%endif%}
+            <li><a href="/quickstart">Quickstart</a></li>
+            <li><a href="/tutorial">How FLOD works</a></li>
+            <li><a href="/settings">Configuring settings</a></li>
+            <li><a href="/templates">Working with templates</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
