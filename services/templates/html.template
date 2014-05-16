@@ -12,7 +12,7 @@
       <div class="row">
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
           <h2>Jinja</h2>
-          <p>FLOD uses Jinja2 templates for rendering content. Jinja is a very powerful template engine that allow developers to create content easily. It supports extension, blocks, filters and many other goodies. More information in the Jinja documentation website</p>
+          <p>FLOD uses Jinja2 templates for rendering content. Jinja is a very powerful template engine that allow developers to create content easily. It supports extension, blocks, filters and many other goodies. More information in the <a href='http://jinja.pocoo.org/docs/'>Jinja documentation website</a>.</p>
           <h3>Variables</h3>
           <p>FLOD provides a series of variables that can be used in any template or query.</p>
           <ul>
