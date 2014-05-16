@@ -190,7 +190,8 @@ INSERT DATA{
 </pre>
 <h3>Notes about Types?</h3>
 <ul>
-<li>Currently, there is no way to prioritize one component over another in case a URI has more than one type (besides rdfs:Resource). Future implementations will allow developers to define this similar to what <a href='https://github.com/alangrafu/lodspeakr/wiki/Type-priority'>was done in LODSPeaKr</a>.</li>
+<li>Currently, there is no way to prioritize one component over another in case a URI has more than one type (besides <code>rdfs:Resource</code>). Future implementations will allow developers to define this similar to what <a href='https://github.com/alangrafu/lodspeakr/wiki/Type-priority'>was done in LODSPeaKr</a>.</li>
+<li>Similar to what happens with <strong>Services</strong>, there are no recursive queries nor multiple endpoint support at this stage.</li>
 </ul>
   </div>
 </div>
