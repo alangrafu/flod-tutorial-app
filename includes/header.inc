@@ -60,6 +60,7 @@
 		footer{
 			position: fixed;
 			bottom: 0px;
+			left:0px;
 			width:100%;
 			background: black;
 			color:grey;

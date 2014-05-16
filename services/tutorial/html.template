@@ -106,8 +106,94 @@
 </pre>
 
 <p>When a service component is used, the queries will be executed against the default SPARQL endpoint, in any order. The results will be available in the <code>queries.q1</code>, <code>queries.q2</code>, ..., <code>queries.qN</code> objects to be displayed in the template.</p>
+  <h4>Arguments in Services</h4>
+  <p>In many cases it is useful to pass arguments to services, such as an ID or a class name. The <strong>Services</strong> module supports passing arguments in each slash (<code>/</code>) after the service name. Thus, requesting <code>http://example.org/foo/bar/123</code> will have two arguments, <code>bar</code> and <code>123</code>. This arguments are stored in the <code>args</code> array, so <code>args[0]</code> is <code>bar</code> and <code>args[1]</code> is <code>123</code>.
+  <h4>Comments of Services</h4>
+    <ul>
+  <li>Right now, FLOD supports only <strong>one</strong> SPARQL endpoint. In the future, it is planned to support multiple endpoints and allow develoeprs to create workflows of queries execution, where results from one query can be used on the following, similar to what was available in LODSPeaKr.</li>
+  <li>Future implementations of <strong>Services</strong> will include at leas a basic content negotiation where the same conten can be exported as RDF or JSON.</li>
+  </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+    <h2>JsonBasedWriter</h2>
+    <p>This module takes a JSON object that has been sent via POST. The goal of <strong>JsonBasedWriter</strong> is to simplify the task of writing to a triple store for developers who do not know about RDF and SPARQL Update. A <strong>JsonBasedWrite</strong> component can contain one or more SPARQL update queries (<code>.update</code> files). It also may contain a <code>queries</code> folder with zero, one or more SPARQL queries. Thus, when a <strong>JsonBasedWriter</strong> is used, the SPARQL queries will be executed first, similar to what happens in a <strong>Service</strong> component. The data obtained in those queries will be stored in the <code>queries.QUERYFILENAME</code> objects. Later all the SPARQL Update queries (the <code>.update</code> files) will be executed. It</p>
+        <pre>
+    <code>
+    components/jsonupdates/foo/
+                              |
+                              |-main.update
+                              |
+                              |-other.update
+                              |
+                              |-queries/
+                                       |
+                                       |-q1.query
+                                       |
+                                       |-q2.query
+                                       |
+                                       |-qN.query
+</code>
+</pre>
+<h3>Example of an update query</h3>
+<p>An update file can use all the values obtained in the SPARQL queries, sessions, user-defined variables as well as the data obtained from the JSON message sent by the agent. An example of a update file looks like this: The user is logged, hence the session already contains contains the user's URI <code>session.uri</code>. Also, a SPARQL queries <code>main</code> returned results, including a variable named <code>total</code>. Finally, the JSON object <code>data</code> included a field named <code>organization</code>. It is also, possible to set new variables, in this case we create a random variable <code>r</code> that will be used to create a new URI.</p>
+<pre><code>
+{% raw %}
+{%set r =  range(1,100000)|random%}
+
+PREFIX rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX :        &lt;http://example.org/vocab/&gt;
+PREFIX xsd:     &lt;http://www.w3.org/2001/XMLSchema#&gt;
+PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt;
+
+INSERT DATA{
+
+  GRAPH &lt;{{session.uri}}&gt;{
+
+  {%for i in queries.main%}
+     &lt;/{{session.username}}/{{r}}/{{i.total.value}}&gt; a :Something.
+
+     {%if data.organization != null and data.organization != ""%}
+          &lt;/{{session.username}}/{{r}}/{{i.total.value}}&gt; :organization """{{data.organization}}""".
+     {%endif%}
+
+  {%endfor%}
+  
+  }
+}
+{%endraw%}
+</code></pre>
 
   </div>
 </div>
+<div class="row">
+  <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+    <h2>Types</h2>
+    <p>The <strong>Types</strong> module is in charge of serve content about URIs existing in the triple store. A difference between this module and <strong>Services</strong> is that the URIs here are not minted. When a URI is requested, the <strong>Types</strong> module will ask the triple store if that URI exists (it may be necessary to <strong>de-mirror it</strong> first, see the <a href="#mirroring">mirroring</a> section for details). If so, <strong>Types</strong> will ask for all the <code>rdf:type</code> of that URI and will chose the most suitable of the available components to serve the content (if no type is suitable, the default is <code>rdfs:Resource</code>). Typically, a component will have the form of a CURIe, where the colon has been replaced by a double underscore (to maintain compatibility with Windows filesystems). For example, the component in charge of <code>foaf:Person</code> URIs will be located in <code>components/types/foaf__Person</code> and a <code>dcat:Dataset</code> will be located in <code>components/types/dcat__Dataset</code>. </p>
+    <p>Similar to <strong>Services</strong> components, <strong>Types</strong> components contain a <code>html.template</code> file and a <code>queries</code> folder with zero, one or more <code>.query</code> files (SPARQL queries).</p>
+ <pre>
+    <code>
+    components/types/foaf__Person/
+                                 |
+                                 |-html.template
+                                 |
+                                 |-queries/
+                                          |
+                                          |-q1.query
+                                          |
+                                          |-q2.query
+                                          |
+                                          |-qN.query
+</code>
+</pre>
+<h3>Notes about Types?</h3>
+<ul>
+<li>Currently, there is no way to prioritize one component over another in case a URI has more than one type (besides rdfs:Resource). Future implementations will allow developers to define this similar to what <a href='https://github.com/alangrafu/lodspeakr/wiki/Type-priority'>was done in LODSPeaKr</a>.</li>
+</ul>
+  </div>
+</div>
+
 </div>
 {%endblock%}
