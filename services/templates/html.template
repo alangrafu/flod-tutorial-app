@@ -39,27 +39,40 @@
      <div class="row">
        <h2>Visual Filters</h2>
        <p>Visual Filters are a simple way to create visualizations out of sparql queries. The developer must pass the results obtained from a SPARQL query and indicate some parameters in order to obtain a visualization</p>
-       <h3>Cities where World Cup finals have been played (according to dbepedia)</h3>
+       <h3>Cities where World Cup finals have been played (according to dbpedia)</h3>
+       <h4><tt>finals.query</tt></h4>
        <pre>
        <code>
-PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX dbp: <http://dbpedia.org/ontology/>
+PREFIX geo: &lt;http://www.w3.org/2003/01/geo/wgs84_pos#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt;
+PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;
 
 SELECT DISTINCT ?city (SAMPLE(?lat1) AS ?lat) (SAMPLE(?lon1) AS ?lon) WHERE{
  ?city    geo:lat ?lat1;
           geo:long ?lon1;
           rdfs:label ?capitalName .
- ?final dcterms:subject <http://dbpedia.org/resource/Category:FIFA_World_Cup_finals>;
+ ?final dcterms:subject &lt;http://dbpedia.org/resource/Category:FIFA_World_Cup_finals&gt;;
         dbp:city ?city.
 
 }
 limit 100
 </code>
 </pre>
-{{queries.finals|GoogleMaps(lat=lat,lon=lon,zoom=8)}}
-{{queries}}
+<h4>Template</h4>
+<pre>
+<code>
+
+{%raw%}
+{{queries.finals|GoogleMaps(lat="lat",lon="lon",width=900,height=500)}}
+{%endraw%}
+</code>
+</pre>
+<h4>Result</h4>
+{{queries.finals|GoogleMaps(lat="lat",lon="lon",width=900,height=500)}}
+
+
+{{queries.attendance|BarChart(x="event", y="attendance")}}
      </div>
     </div>
 
