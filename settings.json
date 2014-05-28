@@ -2,7 +2,7 @@
  	"modules": [ "Static", "Services", "Types"],
  	"ns": {
  		"local": "http://localhost:5002/",
- 		"origin": "http://dbpedia.org/"
+ 		"origin": "http://graves.cl:5002/"
  	},
  	"mirrored": true,
  	"endpoints": {

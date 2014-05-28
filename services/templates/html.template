@@ -37,6 +37,50 @@
         </div>
       </div>
      <div class="row">
+       <h2>Using results on a template</h2>
+       <p>There are two ways to make use of the results: By iterating a result set or by choosing only the first "row" of results. For example, if we want to obtain a set of names of people from dbpedia, we can whether iterate it or use only the first:</p>
+       <h3><tt>names.query</tt></h3>
+       <pre>
+        <code>
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+
+select DISTINCT ?person (SAMPLE(?n) AS ?name) where{
+  ?person a foaf:Person;
+          foaf:name ?n
+}limit 20
+        </code>
+       </pre>
+       <h3>template</h3>
+       <pre><code>{% raw %}
+&lt;ul&gt;
+{%for row in queries.names %}
+  &lt;li&gt;{{row.name.value}}&lt;/li&gt;
+{%endfor%}
+&lt;/ul&gt;
+&lt;p&gt;The first person in the list is &lt;a href='{{first.names.person.value}}&gt;{{first.names.name.value}}&lt;a&gt;&lt;/p&gt;
+{%endraw%}
+</code>
+</pre>
+<h3>Results</h3>
+{%if queries.names%}
+<ul>
+{%for row in queries.names %}
+  <li>{{row.name.value}}</li>
+{%endfor%}
+</ul>
+<p> The first person in the list is <a href='{{first.names.person.value}}'>{{first.names.name.value}}</a>.</p>
+{%else%}
+<div class="panel panel-danger">
+    <div class="panel-heading">
+      <h3 class="panel-title">Error retrieving data</h3>
+    </div>
+    <div class="panel-body">
+      FLOD could not obtain a valid response from dbpedia at this moment.
+    </div>
+</div>
+{%endif%}
+     </div>
+     <div class="row">
        <h2>Visual Filters</h2>
        <p>Visual Filters are a simple way to create visualizations out of sparql queries. The developer must pass the results obtained from a SPARQL query and indicate some parameters in order to obtain a visualization</p>
        <h3>Cities where World Cup finals have been played (according to dbpedia)</h3>
@@ -69,10 +113,63 @@ limit 100
 </code>
 </pre>
 <h4>Result</h4>
+{%if queries.finals%}
 {{queries.finals|GoogleMaps(lat="lat",lon="lon",width=900,height=500)}}
+{%else%}
+<div class="panel panel-danger">
+    <div class="panel-heading">
+      <h3 class="panel-title">Error retrieving data</h3>
+    </div>
+    <div class="panel-body">
+      FLOD could not obtain a valid response from dbpedia at this moment.
+    </div>
+</div>
+{%endif%}
+<h3>Attendance to each final of the World Cup (according to dbpedia)</h3>
 
+<h4><tt>attendance.query</tt></h4>
 
-{{queries.attendance|BarChart(x="event", y="attendance")}}
+<pre>
+<code>
+PREFIX geo: &lt;http://www.w3.org/2003/01/geo/wgs84_pos#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt;
+PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;
+
+SELECT DISTINCT * WHERE{
+
+ ?final dcterms:subject &lt;http://dbpedia.org/resource/Category:FIFA_World_Cup_finals&gt;;
+        &lt;http://dbpedia.org/property/event&gt; ?event;
+        &lt;http://dbpedia.org/property/attendance&gt; ?attendance .
+FILTER (xsd:integer(?attendance) > 0)
+
+}order by ?event
+limit 100
+</code>
+</pre>
+
+<h4>template</h4>
+
+<pre>
+<code>
+{%raw%}
+{{queries.attendance|BarChart(x="event", y="attendance",width=900,height=500)}}
+{%endraw%}
+</code>
+</pre>
+<h4>Results</h4>
+{%if queries.attendance%}
+{{queries.attendance|BarChart(x="event", y="attendance",width=900,height=500)}}
+{%else%}
+<div class="panel panel-danger">
+    <div class="panel-heading">
+      <h3 class="panel-title">Error retrieving data</h3>
+    </div>
+    <div class="panel-body">
+      FLOD could not obtain a valid response from dbpedia at this moment.
+    </div>
+</div>
+{%endif%}
      </div>
     </div>
 
