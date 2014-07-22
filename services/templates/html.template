@@ -39,7 +39,7 @@
       </div>
      <div class="row">
        <h2>Using results on a template</h2>
-       <p>There are two ways to make use of the results: By iterating a result set or by choosing only the first "row" of results. For example, if we want to obtain a set of names of people from dbpedia, we can whether iterate it or use only the first:</p>
+       <p>There are two ways to use the results: By iterating a result set or by choosing only the first "row" of results. For example, if we want to obtain a set of names of people from dbpedia, we can whether iterate over it or use only the first:</p>
        <h3><tt>names.query</tt></h3>
        <pre>
         <code>
