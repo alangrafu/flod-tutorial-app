@@ -23,6 +23,7 @@
                 <li><code>session.username</code> the username of the user</li>
                 <li><code>session.uri</code> the URI of the user</li>
                 <li><code>session.groups</code> an array of groups where the user belonged</li>
+                <li><code>session.params</code> a dictionary of custom parameters defined in <code>users.ttl</code> in the form <code> ex:user a flod:User; flod:parameter [ flod:parameterName "parameterName" ; flod:parameterValue "value" ] .</code></li>
                 <li><code>session.salt</code> the salt for the password of the user</li>
               </ul>
             </li>

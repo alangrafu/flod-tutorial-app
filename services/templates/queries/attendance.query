@@ -1,0 +1,14 @@
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dbp: <http://dbpedia.org/ontology/>
+
+SELECT DISTINCT * WHERE{
+
+ ?final dcterms:subject <http://dbpedia.org/resource/Category:FIFA_World_Cup_finals>;
+        <http://dbpedia.org/property/event> ?event;
+        <http://dbpedia.org/property/attendance> ?attendance .
+FILTER (xsd:integer(?attendance) > 0)
+
+}order by ?event
+limit 100

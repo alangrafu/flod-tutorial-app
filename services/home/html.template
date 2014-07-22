@@ -3,29 +3,42 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Flod is installed!</h1>
-        <p>Flod was installed successfully in your server. Here are a few things you can start doing with it.</p>
+        <h1>Welcome to FLOD</h1>
+        <p>FLOD is a framework for creating applications based on Linked Data.</p>
       </div>
     </div>
 
     <div class="container">
       <!-- Example row of columns -->
       <div class="row">
+	 <div class="col-md-12">FLOD is a framework that makes it easy to create applications based on Linked Data using Semantic Web technologies. It is based on <a href='http://python.org'>Python</a> and <a href='http://flask.pocoo.org/'>Flask</a>.</div>
+      </div>
+      <div class="row">
         <div class="col-md-4">
-          <h2>Explore</h2>
-          <p>Take a look at the data available. Try dereferencing URIs available from your SPARQL endpoint.</p>
-          <p><a class="btn btn-default" href="classes" role="button">View details &raquo;</a></p>
+          <h2>Quickstart</h2>
+          <p>For the impatient. Simply open a terminal and run <code>bash < <(curl -skL http://flod.info/install)</code> and follow the instructions</p>
+          <p><a class="btn btn-default" href="quickstart" role="button">View details &raquo;</a></p>
         </div>
         <div class="col-md-4">
           <h2>Learn</h2>
-          <p>Learn how Flod works and how to create different new components. These components will help you to create different views and process your data.</p>
+          <p>Learn how FLOD works and how to create different new components. These components will help you to create different views and process your data.</p>
           <p><a class="btn btn-default" href="tutorial" role="button">View details &raquo;</a></p>
        </div>
         <div class="col-md-4">
           <h2>Provide feedback</h2>
-          <p>Flod is still in its early developing stages. Any help, suggestions and bug reports are welcome!</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          <p>FLOD is still in its early developing stages. Any help, suggestions and bug reports are welcome!</p>
+          <p><a class="btn btn-default" href="mailto:alvaro@graves.cl" role="button">Send Feedback &raquo;</a></p>
         </div>
+      </div>
+      <div class="row" style="margin-top: 50px;">
+        <div class="col-md-6">
+		<h2>Example: Global Hunger Index</h2>
+		<p>A demo using data from the Global Hunger Index shows how easy is to create applications using Linked Data. The source code of this application is available at <a href='https://github.com/alangrafu/ghi-flod-app'>https://github.com/alangrafu/ghi-flod-app</a>.</p>
+          	<p><a class="btn btn-default" href="http://graves.cl:5113/countries" role="button">Go to demo &raquo;</a></p>
+	</div>
+        <div class="col-md-6">
+		<img src='/ghi.png' style="width:100%"/>
+	</div>
       </div>
     </div>
 {%endblock%}

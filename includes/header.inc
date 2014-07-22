@@ -5,7 +5,7 @@
 	<meta name="author" content="">
 	<link rel="shortcut icon" href="/ico/favicon.ico">
 
-	<title>FLOD Tutorial</title>
+	<title>FLOD, a Linked Data framework</title>
 
 	<!-- Bootstrap core CSS -->
 	<link href="/css/bootstrap.min.css" rel="stylesheet">

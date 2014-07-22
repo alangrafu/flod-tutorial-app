@@ -13,7 +13,6 @@
       <div class="row">
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
           <h2>How to run FLOD</h2>
-          <p>If you are reading this, it is highly likely you know how to configure FLOD. Anyways, the step-by-step process is as follows</p>
           <div class="panel panel-warning">
               <div class="panel-heading">
                 <h3 class="panel-title">Software required</h3>
@@ -23,8 +22,8 @@
               </div>
           </div>
           <ul>
-            <li>Open a terminal and run <code>bash < <(curl -skL http://lodspeakr.org/flod)</code></li>
-            <li>You will be asked if you want to use an existing git repository for your components (for example, this tutorial is available at ). If you do not hae an existing app repository, FLOD will create a new one with some default components.</li>
+            <li>Open a terminal and run <code>bash < <(curl -skL http://flod.info/install)</code></li>
+            <li>You will be asked if you want to use an existing git repository for your components (for example, this tutorial is available at <a href='https://github.com/alangrafu/flod-tutorial-app'>https://github.com/alangrafu/flod-tutorial-app</a> ). If you do not have an existing app repository, FLOD will create a new one with some default components.</li>
             <li id="new">If you create a brand new component repository, you will be asked the following questions
               <ul>
                 <li>Your server's name (e.g., <code>http://myserver.com</code>)</li>
